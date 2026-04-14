@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climbing Quiz — Isaac Meyers</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #1a1a1a;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            color: #f0ece4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 60px;
+        }
+
+        .site-nav {
+            width: 100%;
+            background-color: #111;
+            padding: 14px 40px;
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            border-bottom: 2px solid #c0392b;
+        }
+
+        .site-nav a {
+            color: #f0ece4;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .site-nav a:hover { color: #e74c3c; }
+
+        .hero {
+            background: linear-gradient(135deg, #2c1810, #1a1a1a);
+            width: 100%;
+            text-align: center;
+            padding: 50px 20px 36px;
+            border-bottom: 3px solid #c0392b;
+        }
+
+        .hero h1 {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 46px;
+            color: #e74c3c;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            color: #bbb;
+            font-size: 17px;
+            font-style: italic;
+        }
+
+        .quiz-container {
+            width: 100%;
+            max-width: 680px;
+            margin: 50px auto 0;
+            padding: 0 20px;
+        }
+
+        .progress-bar-wrap {
+            background: #333;
+            border-radius: 99px;
+            height: 8px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #e74c3c;
+            border-radius: 99px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-label {
+            text-align: right;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .card {
+            background: #252525;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 36px 36px 28px;
+        }
+
+        .question-number {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #e74c3c;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 1.4;
+            color: #f0ece4;
+            margin-bottom: 28px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #1a1a1a;
+            border: 1.5px solid #555;
+            border-radius: 8px;
+            color: #f0ece4;
+            font-size: 16px;
+            padding: 14px 18px;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: #e74c3c;
+            background: #2c1810;
+        }
+
+        .option-btn.correct {
+            border-color: #27ae60;
+            background: #0d2e1a;
+            color: #2ecc71;
+        }
+
+        .option-btn.wrong {
+            border-color: #c0392b;
+            background: #2c1010;
+            color: #e74c3c;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            min-height: 48px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .feedback.correct { color: #2ecc71; }
+        .feedback.wrong { color: #e74c3c; }
+
+        .next-btn {
+            display: block;
+            margin: 24px auto 0;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 14px 40px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: background 0.15s;
+        }
+
+        .next-btn:hover { background: #c0392b; }
+
+        /* Results screen */
+        .results {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .results .score-big {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 80px;
+            color: #e74c3c;
+            line-height: 1;
+        }
+
+        .results .score-label {
+            font-size: 20px;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .results .verdict {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .results .verdict-sub {
+            color: #999;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 14px 40px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: background 0.15s;
+        }
+
+        .restart-btn:hover { background: #c0392b; }
+
+        .score-tracker {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+
+        .score-tracker span { color: #f0ece4; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav class="site-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="scratch.html">🧗 Climbing Guide</a>
+    <a href="resume.html">Résumé</a>
+</nav>
+
+<div class="hero">
+    <h1>Climbing Trivia</h1>
+    <p>Test your rock climbing knowledge — 10 questions, can you go clean?</p>
+</div>
+
+<div class="quiz-container">
+    <div id="quiz-screen">
+        <div class="score-tracker">
+            <div>Score: <span id="score-display">0</span></div>
+            <div>Streak: <span id="streak-display">0</span> 🔥</div>
+        </div>
+        <div class="progress-label" id="progress-label">Question 1 of 10</div>
+        <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="progress-bar" style="width: 10%;"></div>
+        </div>
+        <div class="card">
+            <div class="question-number" id="q-number">Question 1</div>
+            <div class="question-text" id="q-text">Loading...</div>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-btn" id="next-btn" style="display:none;" onclick="nextQuestion()">Next Question →</button>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;">
+        <div class="card results">
+            <div class="score-big" id="final-score">0</div>
+            <div class="score-label">out of 10</div>
+            <div class="verdict" id="verdict-text"></div>
+            <div class="verdict-sub" id="verdict-sub"></div>
+            <button class="restart-btn" onclick="restartQuiz()">Try Again ↺</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            q: "What rating scale is used for bouldering problems in the US?",
+            options: ["V-scale (V0–V17)", "Yosemite Decimal System", "French Sport Scale", "UIAA Scale"],
+            answer: 0,
+            fact: "The Hueco V-scale, created by John 'Vermin' Sherman at Hueco Tanks, runs from V0 (beginner) to V17 (cutting edge)."
+        },
+        {
+            q: "What does it mean to 'belay' your climbing partner?",
+            options: [
+                "Scout the route from the ground",
+                "Manage the rope to catch them if they fall",
+                "Climb directly behind them",
+                "Apply chalk to their hands"
+            ],
+            answer: 1,
+            fact: "Belaying is one of the most important safety skills in roped climbing. A certified belayer is required at most gyms."
+        },
+        {
+            q: "What is El Capitan?",
+            options: [
+                "A famous climbing shoe brand",
+                "A 3,000-foot granite wall in Yosemite Valley",
+                "The hardest bouldering problem ever completed",
+                "A type of climbing harness"
+            ],
+            answer: 1,
+            fact: "El Capitan in Yosemite is one of the most iconic big walls in the world, famously free-soloed by Alex Honnold in 2017."
+        },
+        {
+            q: "What is a 'dyno' in climbing?",
+            options: [
+                "A dynamic move where you jump or swing to reach a hold",
+                "A type of climbing rope",
+                "A harness buckle system",
+                "A foothold technique"
+            ],
+            answer: 0,
+            fact: "Dynos are explosive, dynamic moves where a climber launches off the wall to reach a distant hold — pure athleticism."
+        },
+        {
+            q: "What is the primary purpose of chalk in rock climbing?",
+            options: [
+                "To mark your route on the wall",
+                "To keep hands dry and improve grip",
+                "To protect skin from rough rock",
+                "To leave a trail for your belayer"
+            ],
+            answer: 1,
+            fact: "Climbing chalk (magnesium carbonate) absorbs sweat to keep hands dry. It's the same chalk used in gymnastics."
+        },
+        {
+            q: "In sport climbing, what are 'quickdraws' used for?",
+            options: [
+                "Rappelling down after a climb",
+                "Clipping the rope to bolts on the wall as you lead",
+                "Attaching your chalk bag",
+                "Setting up a top rope anchor"
+            ],
+            answer: 1,
+            fact: "Quickdraws consist of two carabiners connected by a short sling. Lead climbers clip their rope through them as they ascend."
+        },
+        {
+            q: "What does 'sending' a route mean?",
+            options: [
+                "Falling off the crux move",
+                "Successfully completing a climb without falling",
+                "Attempting a route for the first time",
+                "Watching a friend climb"
+            ],
+            answer: 1,
+            fact: "To 'send' is to complete a route cleanly. A 'flash' is sending on your first try. An 'onsight' is flashing with no prior beta."
+        },
+        {
+            q: "What is 'trad climbing' short for?",
+            options: [
+                "Training climbing",
+                "Traditional climbing",
+                "Transition climbing",
+                "Technical climbing"
+            ],
+            answer: 1,
+            fact: "In traditional climbing, climbers place their own removable protection (cams, nuts) in cracks as they ascend, then remove it."
+        },
+        {
+            q: "What is the Yosemite Decimal System (YDS) used for?",
+            options: [
+                "Rating bouldering problems",
+                "Rating roped climbing routes by difficulty",
+                "Measuring rope length",
+                "Counting carabiners"
+            ],
+            answer: 1,
+            fact: "YDS rates roped routes from 5.0 (easy) to 5.15 (nearly impossible). The '5.' prefix means technical climbing requiring gear."
+        },
+        {
+            q: "Which legendary climber free-soloed El Capitan's Freerider route in 2017?",
+            options: [
+                "Tommy Caldwell",
+                "Lynn Hill",
+                "Alex Honnold",
+                "Adam Ondra"
+            ],
+            answer: 2,
+            fact: "Alex Honnold completed the first free solo of El Capitan on June 3, 2017 — no rope, no harness, no safety gear. Documented in the film 'Free Solo.'"
+        }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let streak = 0;
+    let answered = false;
+    let order = [];
+
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function startQuiz() {
+        order = shuffle([...Array(questions.length).keys()]);
+        currentIndex = 0;
+        score = 0;
+        streak = 0;
+        updateTrackers();
+        loadQuestion();
+    }
+
+    function updateTrackers() {
+        document.getElementById('score-display').textContent = score;
+        document.getElementById('streak-display').textContent = streak;
+    }
+
+    function loadQuestion() {
+        answered = false;
+        const qi = order[currentIndex];
+        const q = questions[qi];
+        const num = currentIndex + 1;
+
+        document.getElementById('q-number').textContent = 'Question ' + num;
+        document.getElementById('q-text').textContent = q.q;
+        document.getElementById('progress-label').textContent = 'Question ' + num + ' of 10';
+        document.getElementById('progress-bar').style.width = (num / 10 * 100) + '%';
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('feedback').className = 'feedback';
+        document.getElementById('next-btn').style.display = 'none';
+
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => selectAnswer(i, qi);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(selected, qi) {
+        if (answered) return;
+        answered = true;
+
+        const q = questions[qi];
+        const buttons = document.querySelectorAll('.option-btn');
+        const feedback = document.getElementById('feedback');
+
+        buttons.forEach(b => b.disabled = true);
+        buttons[q.answer].classList.add('correct');
+
+        if (selected === q.answer) {
+            score++;
+            streak++;
+            feedback.textContent = '✓ Correct! ' + q.fact;
+            feedback.className = 'feedback correct';
+        } else {
+            buttons[selected].classList.add('wrong');
+            streak = 0;
+            feedback.textContent = '✗ Not quite. ' + q.fact;
+            feedback.className = 'feedback wrong';
+        }
+
+        updateTrackers();
+
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.style.display = 'block';
+        nextBtn.textContent = currentIndex < 9 ? 'Next Question →' : 'See Results';
+    }
+
+    function nextQuestion() {
+        currentIndex++;
+        if (currentIndex >= 10) {
+            showResults();
+        } else {
+            loadQuestion();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('results-screen').style.display = 'block';
+        document.getElementById('final-score').textContent = score;
+
+        let verdict, sub;
+        if (score === 10) {
+            verdict = "🏆 Perfect Send!";
+            sub = "You're a true climbing expert. Go book that Yosemite trip.";
+        } else if (score >= 8) {
+            verdict = "🧗 Crushing It";
+            sub = "Strong performance — you clearly know your way around a wall.";
+        } else if (score >= 6) {
+            verdict = "💪 Solid Climber";
+            sub = "Good knowledge! A few more sessions and you'll be dialed in.";
+        } else if (score >= 4) {
+            verdict = "🪨 Getting There";
+            sub = "You've got the basics. Hit the gym and review the guide!";
+        } else {
+            verdict = "👟 Lace Up Those Shoes";
+            sub = "Time to get climbing! Head back to the guide and try again.";
+        }
+
+        document.getElementById('verdict-text').textContent = verdict;
+        document.getElementById('verdict-sub').textContent = sub;
+    }
+
+    function restartQuiz() {
+        document.getElementById('results-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
+        startQuiz();
+    }
+
+    startQuiz();
+</script>
+
+</body>
+</html>

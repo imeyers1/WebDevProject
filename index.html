@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isaac Meyers</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+        /* Navbar */
+        .navbar { background-color: var(--primary) !important; }
+        .navbar-brand, .nav-link { color: #fff !important; font-size: 14px; letter-spacing: 0.5px; }
+        .nav-link:hover { color: #e74c3c !important; }
+
+        /* Hero */
+        .hero-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #3d5166 100%);
+            color: #fff;
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .hero-section .subtitle {
+            font-size: 20px;
+            color: #ccc;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+        .hero-section .lead {
+            max-width: 640px;
+            margin: 0 auto 30px;
+            color: #bbb;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        .btn-accent {
+            background-color: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            font-size: 15px;
+            border-radius: 4px;
+        }
+        .btn-accent:hover { background-color: #c0392b; color: #fff; }
+
+        /* Section headings */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .section-underline {
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            margin-bottom: 36px;
+        }
+
+        /* Resume section */
+        .resume-section { padding: 80px 0; background: #fff; }
+
+        .resume-card {
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+        .resume-card h5 { font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .resume-card .company { color: var(--accent); font-size: 14px; margin-bottom: 4px; font-weight: 500; }
+        .resume-card .dates { color: #888; font-size: 13px; margin-bottom: 10px; }
+        .resume-card ul { padding-left: 18px; margin: 0; color: #555; font-size: 14px; }
+        .resume-card ul li { margin-bottom: 4px; }
+
+        /* Skills */
+        .skill-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-size: 13px;
+            margin: 4px;
+        }
+
+        /* Contact / info strip */
+        .info-strip {
+            background: var(--primary);
+            color: #ccc;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .info-strip a { color: var(--accent); text-decoration: none; }
+        .info-strip .icon-item { margin: 8px 20px; display: inline-block; font-size: 15px; }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+        footer a { color: #e74c3c; text-decoration: none; }
+
+        .gpa-badge {
+            background: var(--accent);
+            color: #fff;
+            border-radius: 4px;
+            padding: 2px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand fw-semibold" href="index.html">Isaac Meyers</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon" style="filter:invert(1);"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#resume">Résumé</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-section">
+    <div class="container">
+        <h1>Isaac Meyers</h1>
+        <p class="subtitle">Pre-Business Student · Strategic Management · BYU</p>
+        <p class="lead">
+            Motivated leader with experience in client relations, language instruction, and project management. 
+            Preparing to enter BYU's Strategic Management program with a strong academic record and a passion for 
+            meaningful work.
+        </p>
+        <a href="#resume" class="btn btn-accent me-2">View Résumé</a>
+        <a href="scratch.html" class="btn btn-outline-light">🧗 My Hobbies</a>
+    </div>
+</section>
+
+<!-- Resume Section -->
+<section class="resume-section" id="resume">
+    <div class="container">
+        <h2 class="section-title">Résumé</h2>
+        <div class="section-underline"></div>
+
+        <div class="row">
+
+            <!-- Left Column -->
+            <div class="col-lg-6">
+
+                <!-- Education -->
+                <h4 class="mb-3" style="color:var(--primary); font-family:'Playfair Display',serif;">Education</h4>
+                <div class="resume-card mb-4">
+                    <h5>Brigham Young University (BYU)</h5>
+                    <div class="company">Pre-Business — Strategic Management Track</div>
+                    <div class="dates">Expected Graduation: Spring 2028</div>
+                    <ul>
+                        <li>Expected admission to Strategic Management Program: 2026</li>
+                        <li>GPA: <span class="gpa-badge">3.87</span></li>
+                        <li>Relevant Coursework: Anatomy &amp; Physiology, Human Development, COMM 101</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 1 -->
+                <h4 class="mb-3 mt-4" style="color:var(--primary); font-family:'Playfair Display',serif;">Experience</h4>
+
+                <div class="resume-card">
+                    <h5>Fijian Language Instructor</h5>
+                    <div class="company">Missionary Training Center — Provo, UT</div>
+                    <div class="dates"><i class="bi bi-calendar3"></i> June 2025 – Present</div>
+                    <ul>
+                        <li>Deliver structured language instruction to diverse groups of learners</li>
+                        <li>Adapt teaching methods to different learning styles and proficiency levels</li>
+                        <li>Track and support student progress in verbal and written communication</li>
+                        <li>Create an engaging and goal-oriented learning environment</li>
+                    </ul>
+                </div>
+
+                <div class="resume-card">
+                    <h5>Funeral Planning Specialist</h5>
+                    <div class="company">Precoa — Orem, UT</div>
+                    <div class="dates"><i class="bi bi-calendar3"></i> February 2025 – August 2025</div>
+                    <ul>
+                        <li>Guide clients through planning processes with professionalism and clear communication</li>
+                        <li>Manage sensitive conversations while providing detailed service information</li>
+                        <li>Maintain accurate client records and ensure compliance with company standards</li>
+                        <li>Build strong client relationships through personalized service</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-6">
+
+                <h4 class="mb-3" style="color:var(--primary); font-family:'Playfair Display',serif; visibility:hidden;">Experience (cont.)</h4>
+
+                <div class="resume-card">
+                    <h5>ESL Teacher</h5>
+                    <div class="company">Missionary Training Center — Provo, UT</div>
+                    <div class="dates"><i class="bi bi-calendar3"></i> January 2025 – June 2025</div>
+                    <ul>
+                        <li>Taught English as a second language to non-native speakers</li>
+                        <li>Developed lesson plans to accommodate diverse learning styles and abilities</li>
+                        <li>Fostered a positive learning environment encouraging student participation and confidence</li>
+                    </ul>
+                </div>
+
+                <div class="resume-card">
+                    <h5>Professional Painter</h5>
+                    <div class="company">Warnick Painting — Blackfoot, ID</div>
+                    <div class="dates"><i class="bi bi-calendar3"></i> May 2024 – December 2024</div>
+                    <ul>
+                        <li>Managed projects, prepared work areas, and applied finishes to residential and commercial properties</li>
+                        <li>Focused on quality control and adherence to customer specifications</li>
+                        <li>Coordinated multiple tasks simultaneously, meeting deadlines consistently</li>
+                    </ul>
+                </div>
+
+                <!-- Profile summary -->
+                <div class="resume-card mt-2" style="border-left-color: var(--primary);">
+                    <h5>Profile</h5>
+                    <p style="font-size:14px; color:#555; margin:0;">
+                        Motivated pre-business student at BYU preparing to enter the Strategic Management program. 
+                        Brings strong communication, leadership, and organizational skills, with experience in 
+                        client relations, teaching, and project management.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="mt-5" id="skills">
+            <h4 class="mb-3" style="color:var(--primary); font-family:'Playfair Display',serif;">Skills</h4>
+            <div class="section-underline"></div>
+            <div>
+                <span class="skill-badge">Client Relations</span>
+                <span class="skill-badge">Leadership</span>
+                <span class="skill-badge">Communication</span>
+                <span class="skill-badge">Project Management</span>
+                <span class="skill-badge">Language Instruction</span>
+                <span class="skill-badge">Organizational Skills</span>
+                <span class="skill-badge">Time Management</span>
+                <span class="skill-badge">Fijian Language</span>
+                <span class="skill-badge">ESL Teaching</span>
+                <span class="skill-badge">Strategic Thinking</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Strip -->
+<div class="info-strip" id="contact">
+    <div class="container">
+        <h4 class="mb-3" style="color:#fff; font-family:'Playfair Display',serif;">Get In Touch</h4>
+        <div>
+            <span class="icon-item"><i class="bi bi-telephone-fill me-1"></i> 208-479-4747</span>
+            <span class="icon-item"><i class="bi bi-envelope-fill me-1"></i> <a href="mailto:ipm2300@hotmail.com">ipm2300@hotmail.com</a></span>
+            <span class="icon-item"><i class="bi bi-geo-alt-fill me-1"></i> Provo, UT</span>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>Isaac Meyers &mdash; 
+        <a href="scratch.html">🧗 Rock Climbing Page</a> &middot; 
+        <a href="webapp.html">🧠 Climbing Quiz</a>
+    </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
